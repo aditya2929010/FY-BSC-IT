@@ -1,0 +1,132 @@
+
+import math
+
+print("=" * 45)
+print("       STUDENT GRADE & ATTENDANCE TRACKER")
+print("=" * 45)
+
+subjects = []
+
+# Get number of subjects
+n = int(input("\nEnter number of subjects: "))
+
+for i in range(n):
+    print(f"\n--- Subject {i + 1} ---")
+
+    name = input("Enter subject name: ")
+    marks = float(input("Enter marks (out of 100): "))
+    credits = float(input("Enter subject credits: "))
+
+    attended = int(input("Enter lectures attended: "))
+    conducted = int(input("Enter total lectures conducted: "))
+
+    # Validate input
+    if marks < 0 or marks > 100:
+        print("Invalid marks! Enter marks between 0 and 100.")
+        continue
+
+    if credits <= 0 or attended < 0 or conducted <= 0:
+        print("Invalid credits or attendance!")
+        continue
+
+    if attended > conducted:
+        print("Attended lectures cannot exceed conducted lectures!")
+        continue
+
+    # Calculate grade and grade points
+    if marks >= 90:
+        grade = "A+"
+        points = 10
+    elif marks >= 80:
+        grade = "A"
+        points = 9
+    elif marks >= 70:
+        grade = "B+"
+        points = 8
+    elif marks >= 60:
+        grade = "B"
+        points = 7
+    elif marks >= 50:
+        grade = "C"
+        points = 6
+    elif marks >= 40:
+        grade = "D"
+        points = 5
+    else:
+        grade = "F"
+        points = 0
+
+    # Calculate attendance
+    attendance = (attended / conducted) * 100
+
+    # Attendance eligibility
+    if attendance >= 75:
+        status = "Eligible"
+    else:
+        status = "Shortage"
+
+    # Calculate additional lectures needed
+    if attendance < 75:
+        required = math.ceil(
+            (0.75 * conducted - attended) / 0.25
+        )
+    else:
+        required = 0
+
+    subjects.append({
+        "name": name,
+        "marks": marks,
+        "credits": credits,
+        "grade": grade,
+        "points": points,
+        "attendance": attendance,
+        "status": status,
+        "required": required
+    })
+
+
+# Display report
+print("\n" + "=" * 65)
+print("                 SEMESTER PERFORMANCE REPORT")
+print("=" * 65)
+
+total_points = 0
+total_credits = 0
+total_attended = 0
+total_conducted = 0
+
+for subject in subjects:
+    print(f"\nSubject: {subject['name']}")
+    print(f"Marks: {subject['marks']}/100")
+    print(f"Grade: {subject['grade']}")
+    print(f"Attendance: {subject['attendance']:.2f}%")
+    print(f"Status: {subject['status']}")
+
+    if subject['required'] > 0:
+        print(
+            "Additional consecutive lectures needed:",
+            subject['required']
+        )
+    else:
+        print("Attendance requirement satisfied!")
+
+    total_points += subject['points'] * subject['credits']
+    total_credits += subject['credits']
+
+    # Overall attendance calculation
+    # Reconstruct totals from stored attendance percentage
+    # is avoided by using the original input values below.
+
+    print("-" * 40)
+
+
+# Calculate GPA
+if total_credits > 0:
+    gpa = total_points / total_credits
+    print("\nYour Estimated GPA:", round(gpa, 2))
+else:
+    print("\nGPA could not be calculated.")
+
+print("\n" + "=" * 65)
+print("             END OF SEMESTER REPORT")
+print("=" * 65)
