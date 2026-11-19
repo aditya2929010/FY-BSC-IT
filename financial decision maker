@@ -1,0 +1,112 @@
+
+# SMART FINANCIAL DECISION MAKER
+# FY BSc IT Mini Project
+
+def calculate_budget():
+    print("\n--- MONTHLY BUDGET ANALYSIS ---")
+
+    income = float(input("Enter your monthly income (Rs): "))
+
+    rent = float(input("Enter rent/house expenses (Rs): "))
+    food = float(input("Enter food expenses (Rs): "))
+    transport = float(input("Enter transport expenses (Rs): "))
+    entertainment = float(input("Enter entertainment expenses (Rs): "))
+    other = float(input("Enter other expenses (Rs): "))
+
+    expenses = rent + food + transport + entertainment + other
+    savings = income - expenses
+
+    print("\n--- FINANCIAL REPORT ---")
+    print("Monthly Income: Rs.", income)
+    print("Total Expenses: Rs.", expenses)
+    print("Remaining Money: Rs.", savings)
+
+    if income <= 0:
+        print("Invalid income amount.")
+        return
+
+    savings_percentage = (savings / income) * 100
+
+    print("Savings Percentage:", round(savings_percentage, 2), "%")
+
+    if savings < 0:
+        print("\nWARNING: You are spending more than you earn.")
+        print("Recommendation: Reduce unnecessary expenses.")
+
+    elif savings_percentage < 20:
+        print("\nYour savings are relatively low.")
+        print("Recommendation: Try reducing entertainment and other expenses.")
+
+    else:
+        print("\nGood financial management!")
+        print("You are maintaining a positive savings rate.")
+
+def purchase_decision():
+    print("\n--- PURCHASE DECISION ---")
+
+    balance = float(input("Enter your available savings (Rs): "))
+    price = float(input("Enter purchase price (Rs): "))
+
+    if balance < 0 or price < 0:
+        print("Please enter valid positive amounts.")
+        return
+
+    remaining = balance - price
+
+    if remaining < 0:
+        print("Decision: NOT AFFORDABLE")
+        print("You do not have enough savings for this purchase.")
+
+    elif remaining < balance * 0.20:
+        print("Decision: THINK BEFORE BUYING")
+        print("This purchase will use most of your available savings.")
+
+    else:
+        print("Decision: AFFORDABLE")
+        print("You can afford this purchase based on your available savings.")
+
+    print("Money remaining after purchase: Rs.", remaining)
+
+def future_savings():
+    print("\n--- FUTURE SAVINGS CALCULATOR ---")
+
+    monthly = float(input("Enter monthly savings (Rs): "))
+    months = int(input("Enter number of months: "))
+
+    if monthly < 0 or months < 0:
+        print("Please enter valid positive values.")
+        return
+
+    total = monthly * months
+
+    print("Total savings after", months, "months: Rs.", total)
+
+def main():
+    while True:
+        print("\n================================")
+        print(" SMART FINANCIAL DECISION MAKER")
+        print("================================")
+        print("1. Monthly Budget Analysis")
+        print("2. Purchase Decision")
+        print("3. Future Savings Calculator")
+        print("4. Exit")
+
+        choice = input("\nChoose an option (1-4): ")
+
+        if choice == "1":
+            calculate_budget()
+
+        elif choice == "2":
+            purchase_decision()
+
+        elif choice == "3":
+            future_savings()
+
+        elif choice == "4":
+            print("Thank you for using Smart Financial Decision Maker!")
+            break
+
+        else:
+            print("Invalid choice. Please try again.")
+
+main()
